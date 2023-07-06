@@ -10,12 +10,6 @@ Use the IP and PORT for your snek client, use the web view to see the snake UI �
 
 Good Luck 🐍 🐍 🐍
 
-
-"Move: up" - move up one square (unless facing down)
-"Move: down" - move down one square (unless facing up)
-"Move: left" - move left one square (unless facing right)
-"Move: right" - move left one square (unless facing left)
-
 */
 
 
@@ -43,6 +37,5 @@ const connect = function() {
 
   return conn;
 };
-
 
 module.exports = {connect};
