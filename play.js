@@ -1,3 +1,3 @@
-const con = require('./client');
+const c = require('./client');
 
-con.connect();
+c.connect();
