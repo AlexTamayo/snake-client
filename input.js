@@ -13,6 +13,8 @@ s = "Move: down"
 d = "Move: right"
 */
 
+const { CONTROLKEYS, MESSAGES } = require('./constants');
+
 // Stores the active TCP conenction object.
 let connection;
 
@@ -22,40 +24,41 @@ const handleUserInput = function(key) {
     process.exit();
   }
 
-  // MOVE KEYS
-  if (key === '\u001b[A') {
-    connection.write("Move: up");
+  /* MOVE KEYS */
+  const controlKeys = Object.keys(CONTROLKEYS)
+    .find(k => CONTROLKEYS[k] === key);
+
+  if (controlKeys) {
+    connection.write(`Move: ${controlKeys}`);
   }
 
-  if (key === '\u001b[B') {
-    connection.write("Move: down");
+  /* MESSAGES KEY */
+  // const keymapping = Object.keys(KEYMAPPING)
+  //   .find(k => KEYMAPPING[k].toLowerCase() === key.toLowerCase());
+
+  const messages = Object.keys(MESSAGES);
+
+  const messageKey = messages.find(k => k === key.toLowerCase());
+
+  if (messageKey) {
+    connection.write(`Say: ${MESSAGES[messageKey]}`);
   }
 
-  if (key === '\u001b[C') {
-    connection.write("Move: right");
-  }
+  // if (key === 'A' || key === 'a') {
+  //   connection.write("Say: GET TO THE CHOPPA, NOWH!!");
+  // }
 
-  if (key === '\u001b[D') {
-    connection.write("Move: left");
-  }
+  // if (key === 'S' || key === 's') {
+  //   connection.write("Say: SSSSSSSSHHH");
+  // }
 
-  // MESSAGES KEY
-  if (key === 'A' || key === 'a') {
-    connection.write("Say: GET TO THE CHOPPA, NOWH!!");
-  }
-  
-  if (key === 'S' || key === 's') {
-    connection.write("Say: SSSSSSSSHHH");
-  }
-  
-  if (key === 'W' || key === 'w') {
-    connection.write("Say: Alex number 1");
-  }
-  
-  if (key === 'D' || key === 'd') {
-    connection.write("Say: I'm Rick James B***ch!");
-  }
-  
+  // if (key === 'W' || key === 'w') {
+  //   connection.write("Say: Alex number 1");
+  // }
+
+  // if (key === 'D' || key === 'd') {
+  //   connection.write("Say: I'm Rick James B***ch!");
+  // }
 
 };
 
@@ -70,3 +73,40 @@ const setupInput = function(conn) {
 };
 
 module.exports = { setupInput };
+
+
+
+/*
+
+
+Are you able to tell me why ` if (keymapping) {connection.write(`Say: ${keymapping}`);}` isn't working here?
+
+const KEYMAPPING = {
+  'a': 'GET TO THE CHOPPA, NOWH!!',
+  'A': 'GET TO THE CHOPPA, NOWH!!',
+};
+
+const handleUserInput = function(key) {
+  if (key === '\u0003') {
+    process.exit();
+  }
+
+  const controlKeys = Object.keys(CONTROLKEYS)
+    .find(k => CONTROLKEYS[k] === key);
+
+  if (controlKeys) {
+    connection.write(`Move: ${controlKeys}`);
+  }
+
+  const keymapping = Object.keys(KEYMAPPING)
+    .find(k => KEYMAPPING[k] === key);
+
+  if (keymapping) {
+    connection.write(`Say: ${keymapping}`);
+  }
+};
+
+
+
+
+*/
